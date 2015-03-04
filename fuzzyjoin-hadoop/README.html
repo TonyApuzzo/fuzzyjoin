@@ -1,0 +1,748 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>README</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2011-04-12 09:58:14 PDT"/>
+<meta name="author" content="Rares Vernica"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<style type="text/css">code{font-size:smaller;}</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+<div id="content">
+<div id="org-div-home-and-up" style="text-align:right;font-size:70%;white-space:nowrap;">
+ <a accesskey="h" href="http://asterix.ics.uci.edu/fuzzyjoin-mapreduce/"> UP </a>
+ |
+ <a accesskey="H" href="http://asterix.ics.uci.edu/fuzzyjoin-mapreduce/"> HOME </a>
+</div>
+
+<h1 class="title">README</h1>
+
+<p>Author: Rares Vernica &lt;rares (at) ics.uci.edu&gt;
+</p>
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 Copyright </a></li>
+<li><a href="#sec-2">2 Overview </a></li>
+<li><a href="#sec-3">3 Quick Start </a>
+<ul>
+<li><a href="#sec-3_1">3.1 Build </a></li>
+<li><a href="#sec-3_2">3.2 Self-join </a>
+<ul>
+<li><a href="#sec-3_2_1">3.2.1 Upload raw data </a></li>
+<li><a href="#sec-3_2_2">3.2.2 Generate records </a></li>
+<li><a href="#sec-3_2_3">3.2.3 Balance records across nodes </a></li>
+<li><a href="#sec-3_2_4">3.2.4 Run set-similarity self-join </a></li>
+</ul>
+</li>
+<li><a href="#sec-3_3">3.3 R-S join </a>
+<ul>
+<li><a href="#sec-3_3_1">3.3.1 Upload raw data </a></li>
+<li><a href="#sec-3_3_2">3.3.2 Generate records </a></li>
+<li><a href="#sec-3_3_3">3.3.3 Balance records across nodes </a></li>
+<li><a href="#sec-3_3_4">3.3.4 Run set-similarity join </a></li>
+</ul></li>
+</ul>
+</li>
+<li><a href="#sec-4">4 Configuration </a></li>
+<li><a href="#sec-5">5 Directory Structure and Tasks </a></li>
+<li><a href="#sec-6">6 Dataset </a></li>
+<li><a href="#sec-7">7 Source Code Overview </a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Copyright </h2>
+<div class="outline-text-2" id="text-1">
+
+<p>Copyright 2010-2011 The Regents of the University of California
+</p>
+<p>
+Licensed under the Apache License, Version 2.0 (the "License"); you
+may not use this file except in compliance with the License.  You
+may obtain a copy of the License at
+</p>
+<p>
+<a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a>
+</p>
+<p>
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS"; BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+implied.  See the License for the specific language governing
+permissions and limitations under the License.
+</p></div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Overview </h2>
+<div class="outline-text-2" id="text-2">
+
+<p>This guide describes how to use the source code developed for the study in:
+</p>
+
+
+
+<pre class="example">Efficient Parallel Set-Similarity Joins Using MapReduce.
+Rares Vernica, Michael J. Carey, Chen Li
+SIGMOD 2010 
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Quick Start </h2>
+<div class="outline-text-2" id="text-3">
+
+<p>The only requirement for running the code is a Hadoop cluster. It does
+not have to be a full-fledged cluster, a single-node
+pseudo-distributed installation of Hadoop is enough. For more details
+about starting a Hadoop cluster please see
+<a href="http://hadoop.apache.org/common/docs/current/quickstart.html">http://hadoop.apache.org/common/docs/current/quickstart.html</a> The code
+works with Hadoop version 0.17 or higher.
+</p>
+</div>
+
+<div id="outline-container-3_1" class="outline-3">
+<h3 id="sec-3_1"><span class="section-number-3">3.1</span> Build </h3>
+<div class="outline-text-3" id="text-3_1">
+
+
+
+
+<pre class="example">$ cd fuzzyjoin-hadoop
+fuzzyjoin-hadoop$ ant
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-3_2" class="outline-3">
+<h3 id="sec-3_2"><span class="section-number-3">3.2</span> Self-join </h3>
+<div class="outline-text-3" id="text-3_2">
+
+<p>Here are the steps to perform a self-join on a small sample of the
+DBLP dataset. We use 100 DBLP entries, title and authors as the join
+attributes, Jaccard similarity and a 0.5 similarity threshold.
+</p>
+</div>
+
+<div id="outline-container-3_2_1" class="outline-4">
+<h4 id="sec-3_2_1"><span class="section-number-4">3.2.1</span> Upload raw data </h4>
+<div class="outline-text-4" id="text-3_2_1">
+
+
+
+
+<pre class="example">fuzzyjoin-hadoop$ hadoop fs -put \
+  ../data/dblp-small/raw-000 dblp-small/raw-000
+</pre>
+
+
+
+<p>
+The file <code>dblp-small.raw.txt</code> contains one record per line. On each
+line the fields are separated by "<code>:</code>" and contain DBLP id,
+publication title, authors (concatenated with " ") and other
+information available about the publication (concatenated with " ").
+</p></div>
+
+</div>
+
+<div id="outline-container-3_2_2" class="outline-4">
+<h4 id="sec-3_2_2"><span class="section-number-4">3.2.2</span> Generate records </h4>
+<div class="outline-text-4" id="text-3_2_2">
+
+
+
+
+<pre class="example">fuzzyjoin-hadoop$ hadoop jar target/fuzzyjoin-hadoop-0.0.2.jar \
+  recordbuild -conf src/main/resources/fuzzyjoin/dblp.quickstart.xml
+</pre>
+
+
+
+<p>
+This job assigns unique record-IDs to each record. The RIDs are
+integers and are appended in front of each record. After this job,
+each record contains five fields: RID, DBLP id, title, authors, other
+information.
+</p></div>
+
+</div>
+
+<div id="outline-container-3_2_3" class="outline-4">
+<h4 id="sec-3_2_3"><span class="section-number-4">3.2.3</span> Balance records across nodes </h4>
+<div class="outline-text-4" id="text-3_2_3">
+
+
+
+
+<pre class="example">fuzzyjoin-hadoop$ hadoop jar target/fuzzyjoin-hadoop-0.0.2.jar \
+  recordbalance -conf src/main/resources/fuzzyjoin/dblp.quickstart.xml
+</pre>
+
+
+
+<p>
+To skip this step, run:
+</p>
+
+
+
+<pre class="example">fuzzyjoin-hadoop$ hadoop fs -mv \
+  dblp-small/recordsbulk-000 dblp-small/records-000
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-3_2_4" class="outline-4">
+<h4 id="sec-3_2_4"><span class="section-number-4">3.2.4</span> Run set-similarity self-join </h4>
+<div class="outline-text-4" id="text-3_2_4">
+
+
+
+
+<pre class="example">fuzzyjoin-hadoop$ hadoop jar target/fuzzyjoin-hadoop-0.0.2.jar \
+  fuzzyjoin -conf src/main/resources/fuzzyjoin/dblp.quickstart.xml
+</pre>
+
+
+
+<p>
+This will run the three stages required to do fuzzy joins: token
+ordering (Tokens), kernel (RIDPairs), and record join
+(RecordPairs). It will use the basic alternative for each stage. In
+total it will run five Hadoop jobs (TokensBasic.phase1,
+TokenBasic.phase2, RIDPairsImproved, RecordPairsBasic.phase1,
+RecordPairsBasic.phase2).
+</p>
+<p>
+Each stage can be run separately using different alternatives by
+replacing <code>fuzzyjoin</code> in the above command with the name of the stage
+and the alternative. For example, to run the one-phase token ordering
+(TokensImproved), type:
+</p>
+
+
+
+<pre class="example">fuzzyjoin-hadoop$ hadoop jar target/fuzzyjoin-hadoop-0.0.2.jar \
+  tokensimproved -conf src/main/resources/fuzzyjoin/dblp.quickstart.xml
+</pre>
+
+
+
+<p>
+To get the list with all the available stages and alternatives, type:
+</p>
+
+
+
+<pre class="example">fuzzyjoin-hadoop$ hadoop jar target/fuzzyjoin-hadoop-0.0.2.jar
+</pre>
+
+
+
+<p>
+To see the results, type:
+</p>
+
+
+
+<pre class="example">fuzzyjoin-hadoop$ hadoop fs -cat "dblp-small/recordpairs-000/part-*"
+</pre>
+
+
+
+<p>
+Each line contains a pair of records that fuzzy join and their
+similarity. The format of the line is <code>record 1;threshold;record2</code>,
+where <code>record1</code> and <code>record2</code> have the same format as described in
+step 3.
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-3_3" class="outline-3">
+<h3 id="sec-3_3"><span class="section-number-3">3.3</span> R-S join </h3>
+<div class="outline-text-3" id="text-3_3">
+
+<p>Here are the steps to perform a join between a small sample of the
+DBLP dataset and a small sample of the CITESEERX dataset. We use 100
+DBLP entries and 100 CITESEERX entries, title and authors as the join
+attributes, Jaccard similarity and a 0.5 similarity threshold.
+</p>
+</div>
+
+<div id="outline-container-3_3_1" class="outline-4">
+<h4 id="sec-3_3_1"><span class="section-number-4">3.3.1</span> Upload raw data </h4>
+<div class="outline-text-4" id="text-3_3_1">
+
+
+
+
+<pre class="example">fuzzyjoin-hadoop$ hadoop fs -put \
+  ../data/pub-small/raw.dblp-000 pub-small/raw.dblp-000
+fuzzyjoin-hadoop$ hadoop fs -put \
+  ../data/pub-small/raw.csx-000 pub-small/raw.csx-000
+</pre>
+
+
+
+<p>
+The <code>raw</code> directory contains two files, one for each dataset.
+</p></div>
+
+</div>
+
+<div id="outline-container-3_3_2" class="outline-4">
+<h4 id="sec-3_3_2"><span class="section-number-4">3.3.2</span> Generate records </h4>
+<div class="outline-text-4" id="text-3_3_2">
+
+
+
+
+<pre class="example">fuzzyjoin-hadoop$ hadoop jar target/fuzzyjoin-hadoop-0.0.2.jar \
+  recordbuild -conf src/main/resources/fuzzyjoin/pub.quickstart.xml \
+  -Dfuzzyjoin.data.suffix.input=dblp
+fuzzyjoin-hadoop$ hadoop jar target/fuzzyjoin-hadoop-0.0.2.jar \
+  recordbuild -conf src/main/resources/fuzzyjoin/pub.quickstart.xml \
+  -Dfuzzyjoin.data.suffix.input=csx
+</pre>
+
+
+
+<p>
+Each job generates records for one of the datasets.
+</p></div>
+
+</div>
+
+<div id="outline-container-3_3_3" class="outline-4">
+<h4 id="sec-3_3_3"><span class="section-number-4">3.3.3</span> Balance records across nodes </h4>
+<div class="outline-text-4" id="text-3_3_3">
+
+
+
+
+<pre class="example">fuzzyjoin-hadoop$ hadoop jar target/fuzzyjoin-hadoop-0.0.2.jar \
+  recordbalance -conf src/main/resources/fuzzyjoin/pub.quickstart.xml \
+  -Dfuzzyjoin.data.suffix.input=dblp
+fuzzyjoin-hadoop$ hadoop jar target/fuzzyjoin-hadoop-0.0.2.jar \
+  recordbalance -conf src/main/resources/fuzzyjoin/pub.quickstart.xml \
+  -Dfuzzyjoin.data.suffix.input=csx
+</pre>
+
+
+
+<p>
+To skip this step, run:
+</p>
+
+
+
+<pre class="example">fuzzyjoin-hadoop$ hadoop fs -mv \
+  pub-small/recordsbulk.dblp-000 pub-small/records.dblp-000
+fuzzyjoin-hadoop$ hadoop fs -mv \
+  pub-small/recordsbulk.csx-000 pub-small/records.csx-000
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-3_3_4" class="outline-4">
+<h4 id="sec-3_3_4"><span class="section-number-4">3.3.4</span> Run set-similarity join </h4>
+<div class="outline-text-4" id="text-3_3_4">
+
+
+
+
+<pre class="example">fuzzyjoin-hadoop$ hadoop jar target/fuzzyjoin-hadoop-0.0.2.jar \
+  fuzzyjoin -conf src/main/resources/fuzzyjoin/pub.quickstart.xml
+</pre>
+
+
+
+<p>
+To see the results, type:
+</p>
+
+
+
+<pre class="example">fuzzyjoin-hadoop$ hadoop fs -cat "pub-small/recordpairs-000/part-*"
+</pre>
+
+
+
+<p>
+Each line contains a pair of records that fuzzy join and their
+similarity. The format of the line is
+<code>record-DBLP;threshold;record-CITESEERX</code>, where <code>record-DBLP</code> and
+<code>record-CITESEERX</code> have the same format as described in the self-join
+case.
+</p></div>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Configuration </h2>
+<div class="outline-text-2" id="text-4">
+
+<p>The XML files provided with the <code>-conf</code> argument above contain various
+configuration parameters. Using the configuration parameters, a user
+can specify the location of the data, the similarity function and
+threshold, the join attributes and other settings. Moreover the user
+can specify additional parameters in the command line using the <code>-D</code>
+option.
+</p>
+<p>
+The default parameters and more details about each parameter are in:
+</p>
+
+
+
+<pre class="example">fuzzyjoin-hadoop/src/main/resources/fuzzyjoin/default.xml 
+</pre>
+
+
+
+<p>
+All these parameters and other constants are defined in:
+</p>
+
+
+
+<pre class="example">fuzzyjoin-core/src/main/java/edu/uci/ics/fuzzyjoin/FuzzyJoinConfig.java
+fuzzyjoin-hadoop/src/main/java/edu/uci/ics/fuzzyjoin/hadoop/FuzzyJoinDriver.java
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Directory Structure and Tasks </h2>
+<div class="outline-text-2" id="text-5">
+
+<p>The following directory structure is used for self-joins:
+</p>
+
+
+
+<pre class="example">|
+|- raw-000
+|- recordsbulk-000
+|- recordsbulk-001
+|- ...
+|- records-000
+|- records-001
+|- ...
+|- tokens-000
+|- ...
+|- tokens.phase1-000
+|- ...
+|- ridpairs-000
+|- ...
+|- recordpairs-000
+|- ...
+|- recordpairs.phase1-000
+|- ...
+</pre>
+
+
+
+<p>
+The <code>raw-000</code> directory contains the original files, one record per
+line. The <code>recordsbulk</code> directory contains the original data where
+each record starts with an integer RID. The number after the directory
+name represents the copy number (<code>000</code> is the original data, <code>001</code> is
+the first copy, etc.). The <code>records</code> directory contains the same data
+as the <code>recordsbulk</code> directory except that multiple copies are
+aggregated and the data is balanced across nodes. The number after the
+directory name represents how many copies are aggregated (<code>000</code> is of
+only one copy: <code>recordsbulk-000</code>, <code>001</code> is for two copies:
+<code>recordsbulk-000</code> and <code>recordsbulk-001</code>, etc.). So <code>records-n</code>
+represents an increased dataset, where <code>n</code> denotes how many times the
+dataset was increased. For the rest of the directories the number
+after the directory name has the same meaning. The <code>tokens</code> directory
+contains the list of tokens. The <code>ridpairs</code> directory contains the RID
+pairs that fuzzy-join. The <code>recordpairs</code> directory contains the record
+pairs that fuzzy-join. The <code>phase1</code> prefix that appears for some
+directories represents the output of the first MapReduce job for the
+tasks with two MapReduce jobs (i.e., <code>tokensbasic</code> and
+<code>recordpairsbasic</code>).
+</p>
+<p>
+Bellow is a table with each task input and output directories:
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption></caption>
+<colgroup><col class="left" /><col class="left" /><col class="left" />
+</colgroup>
+<thead>
+<tr><th scope="col" class="left">Task</th><th scope="col" class="left">Input</th><th scope="col" class="left">Output</th></tr>
+</thead>
+<tbody>
+<tr><td class="left">recordbuild</td><td class="left">raw</td><td class="left">recordsbulk</td></tr>
+<tr><td class="left">recordbalance</td><td class="left">recordsbulk</td><td class="left">records</td></tr>
+<tr><td class="left">tokens basic/improved</td><td class="left">records</td><td class="left">tokens</td></tr>
+<tr><td class="left">ridpairs improved/ppjoin</td><td class="left">records, tokens</td><td class="left">ridpairs</td></tr>
+<tr><td class="left">recordpairs basic/improved</td><td class="left">records, ridpairs</td><td class="left">recordpairs</td></tr>
+<tr><td class="left">recordgenerate</td><td class="left">recordsbulk-000, tokens-000</td><td class="left">recordsbulk</td></tr>
+</tbody>
+</table>
+
+
+<p>
+For R-S joins, the first few directories also carry the name of the
+dataset (name of the R dataset or of the S dataset) in order to
+differentiate between them:
+</p>
+
+
+
+<pre class="example">|
+|- raw.DATASET_R-000
+|- raw.DATASET_S-000
+|- recordsbulk.DATASET_R-000
+|- recordsbulk.DATASET_R-001
+|- ...
+|- recordsbulk.DATASET_S-000
+|- recordsbulk.DATASET_S-001
+|- ...
+|- records.DATASET_R-000
+|- records.DATASET_R-001
+|- ...
+|- records.DATASET_S-000
+|- records.DATASET_S-001
+|- ...
+</pre>
+
+
+
+<p>
+where <code>DATASET_R</code> and <code>DATASET_S</code> are the names of the two
+datasets. In our R-S join example we used <code>dblp</code> for <code>DATASET_R</code> and
+<code>csx</code> for <code>DATASET_S</code>.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Dataset </h2>
+<div class="outline-text-2" id="text-6">
+
+<p>By default the dataset is assumed to have one record per line. The
+fields of each record are delimited by "<code>:</code>". The first filed of each
+record is an integer RID. This settings can be changed in:
+</p>
+
+
+
+<pre class="example">fuzzyjoin-core/src/main/java/edu/uci/ics/fuzzyjoin/FuzzyJoinConfig.java
+</pre>
+
+
+
+<p>
+The dataset can be increased using the <code>recordgenerate</code> task:
+</p>
+
+
+
+<pre class="example">fuzzyjoin-hadoop$ hadoop jar target/fuzzyjoin-hadoop-0.0.2.jar \
+  recordgenerate -conf src/main/resources/fuzzyjoin/dblp.quickstart.xml \
+  -Dfuzzyjoin.data.copy=10 \
+  -Dfuzzyjoin.data.norecords=100
+</pre>
+
+
+
+<p>
+This stats <code>9</code> MapReduce jobs, each of them generating a new copy of
+the dataset. The <code>fuzzyjoin.data.copy</code> parameter specifies the number
+of times the dataset should be increased, while the
+<code>fuzzyjoin.data.norecords</code> parameter specifies the number of records
+in the <b>original</b> dataset (it is used to generate unique and
+increasing RIDs). All the following tasks also need to have the same
+value for the <code>fuzzyjoin.data.copy</code> parameter in order to use the
+increased dataset. This task can only be ran after running
+<code>recordbuild</code> and <code>tokensbasic</code> or <code>tokensimproved</code> on the original
+dataset. After this task, the <code>recordbuild</code> task needs to be ran (it
+cannot be skipped on the increased dataset):
+</p>
+
+
+
+<pre class="example">fuzzyjoin-hadoop$ hadoop jar target/fuzzyjoin-hadoop-0.0.2.jar \
+  recordbalance -conf src/main/resources/fuzzyjoin/dblp.quickstart.xml \
+  -Dfuzzyjoin.data.copy=10
+fuzzyjoin-hadoop$ hadoop jar target/fuzzyjoin-hadoop-0.0.2.jar \
+  fuzzyjoin -conf src/main/resources/fuzzyjoin/dblp.quickstart.xml \
+  -Dfuzzyjoin.data.copy=10
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> Source Code Overview </h2>
+<div class="outline-text-2" id="text-7">
+
+<p>The source code is divided into two modules:
+</p><ul>
+<li>
+<code>fuzzyjoin-core</code>: general fuzzy-join code in
+<code>fuzzyjoin-core/src/main/java</code>
+<ul>
+<li>
+<code>edu.uci.ics.fuzzyjoin</code>: main memory fuzzy-join
+</li>
+<li>
+<code>edu.uci.ics.fuzzyjoin.similarity</code>: similarity functions and
+filters
+</li>
+<li>
+<code>edu.uci.ics.fuzzyjoin.invertedlist</code>: inverted lists index
+</li>
+<li>
+<code>edu.uci.ics.fuzzyjoin.recordgroup</code>: alternatives for grouping records
+</li>
+<li>
+<code>edu.uci.ics.fuzzyjoin.tokenizer</code>: tokenizes
+</li>
+<li>
+<code>edu.uci.ics.fuzzyjoin.tokenorder</code>: alternatives for ordering tokens
+</li>
+</ul>
+</li>
+<li>
+<code>fuzzyjoin-hadoop</code>: Hadoop specific fuzzy-join code in
+<code>fuzzyjoin-hadoop/src/main/java</code>
+<ul>
+<li>
+<code>edu.uci.ics.fuzzyjoin.hadoop</code>: main program
+</li>
+<li>
+<code>edu.uci.ics.fuzzyjoin.hadoop.datagen</code>: classes for building
+records and increasing dataset size
+</li>
+<li>
+<code>edu.uci.ics.fuzzyjoin.hadoop.recordpairs</code>: Stage 3
+</li>
+<li>
+<code>edu.uci.ics.fuzzyjoin.hadoop.ridpairs</code>: Stage 2
+</li>
+<li>
+<code>edu.uci.ics.fuzzyjoin.hadoop.ridrecordpairs</code>: alternative to
+Stage 2 and 3 where records are not projected
+</li>
+<li>
+<code>edu.uci.ics.fuzzyjoin.hadoop.tokens</code>: Stage 1
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+<div id="postamble">
+<p class="date"> Date: 2011-04-12 09:58:14 PDT</p>
+<p class="creator">HTML generated by org-mode 7.4 in emacs 24</p>
+</div>
+</div>
+</body>
+</html>

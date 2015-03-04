@@ -1,0 +1,4 @@
+Map input records=3785057
+Reduce output records=726020
+Map input records=726020
+Reduce output records=363010

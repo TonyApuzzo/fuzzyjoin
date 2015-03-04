@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<configuration>
+  <property>
+    <name>fuzzyjoin.data.dir</name>
+    <value>/data/pub.small</value>
+  </property>
+  <property>
+    <name>fuzzyjoin.data.suffix.input</name>
+    <value>dblp,csx</value>
+  </property>
+  <property>
+    <name>fuzzyjoin.similarity.threshold</name>
+    <value>.5</value>
+  </property>
+  <property>
+    <name>fuzzyjoin.record.data</name>
+    <value>2,3</value>
+  </property>
+  <property>
+    <name>fuzzyjoin.record.data1</name>
+    <value>2,3</value>
+  </property>
+</configuration>

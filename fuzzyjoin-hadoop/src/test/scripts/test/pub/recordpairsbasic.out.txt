@@ -1,0 +1,40 @@
+Multi-Job started: Thu Dec 09 11:08:14 PST 2010
+FuzzyJoinDriver(RecordPairsBasic.phase1)
+  Input Path:  {hdfs://localhost:9000/data/records.dblp-000
+                hdfs://localhost:9000/data/records.csx-000
+                hdfs://localhost:9000/data/ridpairs-000}
+  Output Path: hdfs://localhost:9000/data/recordpairs.phase1-000
+  Map Jobs:    4
+  Reduce Jobs: 1
+  Properties:  {fuzzyjoin.similarity.name=Jaccard
+                fuzzyjoin.similarity.threshold=.8
+                fuzzyjoin.tokenizer=Word
+                fuzzyjoin.tokens.package=Scalar
+                fuzzyjoin.tokens.lengthstats=false
+                fuzzyjoin.ridpairs.group.class=TokenIdentity
+                fuzzyjoin.ridpairs.group.factor=1
+                fuzzyjoin.data.tokens=
+                fuzzyjoin.data.joinindex=}
+Job started: Thu Dec 09 11:08:14 PST 2010
+org.apache.hadoop.mapred.InvalidInputException: Input path does not exist: hdfs://localhost:9000/data/records.csx-000
+Input path does not exist: hdfs://localhost:9000/data/ridpairs-000
+	at org.apache.hadoop.mapred.FileInputFormat.listStatus(FileInputFormat.java:192)
+	at org.apache.hadoop.mapred.FileInputFormat.getSplits(FileInputFormat.java:212)
+	at org.apache.hadoop.mapred.JobClient.writeOldSplits(JobClient.java:810)
+	at org.apache.hadoop.mapred.JobClient.submitJobInternal(JobClient.java:781)
+	at org.apache.hadoop.mapred.JobClient.submitJob(JobClient.java:730)
+	at org.apache.hadoop.mapred.JobClient.runJob(JobClient.java:1249)
+	at edu.uci.ics.fuzzyjoin.hadoop.FuzzyJoinDriver.run(FuzzyJoinDriver.java:178)
+	at edu.uci.ics.fuzzyjoin.hadoop.recordpairs.RecordPairsBasic.main(RecordPairsBasic.java:155)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.hadoop.util.ProgramDriver$ProgramDescription.invoke(ProgramDriver.java:68)
+	at org.apache.hadoop.util.ProgramDriver.driver(ProgramDriver.java:139)
+	at edu.uci.ics.fuzzyjoin.hadoop.FuzzyJoinDriver.main(FuzzyJoinDriver.java:120)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.hadoop.util.RunJar.main(RunJar.java:156)

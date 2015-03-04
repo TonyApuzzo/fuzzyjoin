@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<!-- Put site-specific property overrides in this file. -->
+
+<configuration>
+
+  <property>
+    <name>mapred.job.tracker</name>
+    <value>localhost:9001</value>
+  </property>
+
+  <property>
+    <name>mapred.map.tasks</name>
+    <value>2</value>
+    <description>The default number of map tasks per job.  Typically set
+    to a prime several times greater than number of available hosts.
+    Ignored when mapred.job.tracker is "local".  
+    </description>
+  </property>
+
+  <property>
+    <name>mapred.reduce.tasks</name>
+    <value>2</value>
+    <description>The default number of reduce tasks per job.
+    Typically set to a prime close to the number of available hosts.
+    Ignored when mapred.job.tracker is "local".
+    </description>
+  </property>
+
+  <property>
+    <name>mapred.map.max.attempts</name>
+    <value>1</value>
+    <description>Expert: The maximum number of attempts per map task.
+    In other words, framework will try to execute a map task these
+    many number of times before giving up on it.
+    </description>
+  </property>
+
+  <property>
+    <name>mapred.reduce.max.attempts</name>
+    <value>1</value>
+    <description>Expert: The maximum number of attempts per reduce
+    task.  In other words, framework will try to execute a reduce
+    task these many number of times before giving up on it.
+    </description>
+  </property>
+
+  <property>
+    <name>mapred.map.tasks.speculative.execution</name>
+    <value>false</value>
+    <description>If true, then multiple instances of some map tasks
+    may be executed in parallel.</description>
+  </property>
+
+  <property>
+    <name>mapred.reduce.tasks.speculative.execution</name>
+    <value>false</value>
+    <description>If true, then multiple instances of some reduce tasks
+    may be executed in parallel.</description>
+  </property>
+
+  <property>
+    <name>mapred.compress.map.output</name>
+    <value>true</value>
+    <description>Should the job outputs be compressed?
+    </description>
+  </property>
+
+  <property>
+    <name>mapred.job.reuse.jvm.num.tasks</name>
+    <value>-1</value>
+    <description>How many tasks to run per jvm. If set to -1, there is
+    no limit. 
+    </description>
+  </property>
+
+  <property>
+    <name>mapred.child.java.opts</name>
+    <value>-Xmx2048m</value>
+    <description>Java opts for the task tracker child processes.  The
+    following symbol, if present, will be interpolated: @taskid@ is
+    replaced by current TaskID. Any other occurrences of '@' will go
+    unchanged.  For example, to enable verbose gc logging to a file
+    named for the taskid in /tmp and to set the heap maximum to be a
+    gigabyte, pass a 'value' of: -Xmx1024m -verbose:gc
+    -Xloggc:/tmp/@taskid@.gc
+    
+    The configuration variable mapred.child.ulimit can be used to
+    control the maximum virtual memory of the child processes.
+    </description>
+  </property>
+
+  <property>
+    <name>mapred.reduce.slowstart.completed.maps</name>
+    <value>0</value>
+    <description>Fraction of the number of maps in the job which
+    should be complete before reduces are scheduled for the job.
+    </description>
+  </property>
+
+</configuration>

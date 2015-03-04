@@ -1,0 +1,2 @@
+Map input records=1385532
+Map output records=1385532

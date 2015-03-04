@@ -1,0 +1,17 @@
+#+TEXT:Author: Rares Vernica <rares (at) ics.uci.edu>
+#+TEXT:
+#+LINK_HOME: http://asterix.ics.uci.edu/fuzzyjoin-mapreduce/
+#+STYLE: <style type="text/css">code{font-size:smaller;}</style>
+#+OPTIONS:author:nil
+* fuzzyjoin-0.0.2.tgz (April 11th, 2011)
+- change package name
+- reorganize code
+- fix bugs
+* fuzzyjoin-mapreduce-RWE-2010-04-23.tgz (April 23rd, 2010)
+- code release for ACM SIGMOD 2010 Repeatability & Workability
+  Evaluation http://event.cwi.nl/SIGMOD-RWE/2010/
+- added scripts to run experiments and generate the figures in the
+  SIGMOD 2010 "Efficient Parallel Set-Similarity Joins Using
+  MapReduce" paper
+* fuzzyjoin-mapreduce-1.0.tgz (March 24th, 2010)
+- initial code release

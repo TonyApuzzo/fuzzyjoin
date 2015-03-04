@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="fuzzyjoin-core" default="jar" basedir=".">
+  <property name="version" value="0.0.2-SNAPSHOT"/>
+  <property name="src.dir" value="src/main/java" />
+  <property name="build.dir" value="target" />
+  <property name="classes.dir" value="${build.dir}/classes" />
+  <property name="jar.dir" value="${build.dir}" />
+  <property name="jar.file" value="${ant.project.name}-${version}.jar" />
+  <property name="main.class" value="edu.uci.ics.fuzzyjoin.FuzzyJoinMemory" />
+  <fileset dir="${classes.dir}" id="class">
+    <include name="**" />
+    <exclude name="" />
+  </fileset>
+  <!-- ================================= 
+       target: clean              
+       ================================= -->
+  <target name="clean" depends="" description="">
+    <delete dir="${build.dir}" />
+  </target>
+  <!-- ================================= 
+       target: compile              
+       ================================= -->
+  <target name="compile" depends="" description="">
+    <mkdir dir="${classes.dir}" />
+    <javac srcdir="${src.dir}" destdir="${classes.dir}" target="1.6" debug="true" includeantruntime="false">
+      <include name="**/*.java"/>
+    </javac>
+  </target>
+  <!-- ================================= 
+       target: jar              
+       ================================= -->
+  <target name="jar" depends="compile" description="">
+    <mkdir dir="${jar.dir}" />
+    <jar destfile="${jar.dir}/${jar.file}">
+      <fileset refid="class" />
+      <manifest>
+        <attribute name="Main-Class" value="${main.class}" />
+      </manifest>
+    </jar>
+  </target>
+  <!-- ================================= 
+       target: run              
+       ================================= -->
+  <target name="run" depends="jar" description="">
+    <java fork="true" classname="${main.class}">
+      <classpath>
+        <path location="${jar.dir}/${ant.project.name}-${version}.jar" />
+      </classpath>
+    </java>
+  </target>
+  <!-- ================================= 
+       target: jar             
+       ================================= -->
+  <target name="build" depends="jar" description="" />
+  <!-- ================================= 
+       target: main              
+       ================================= -->
+  <target name="main" depends="clean,jar" description="" />
+</project>

@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<configuration>
+  <property>
+    <name>fuzzyjoin.data.dir</name>
+    <value>/data/dblp</value>
+  </property>
+  <property>
+    <name>fuzzyjoin.record.data</name>
+    <value>2,3</value>
+  </property>
+  <property>
+    <name>fuzzyjoin.similarity.threshold</name>
+    <value>.80</value>
+  </property>
+  <property>
+    <name>fuzzyjoin.data.norecords</name>
+    <value>1268017</value>
+    <description>Only used for RecordBuild and RecordGenerate.
+    </description>
+  </property>
+  <property>
+    <name>fuzzyjoin.data.copy</name>
+    <value>100</value>
+  </property>
+  <!--   <property> -->
+  <!--     <name>mapred.map.tasks</name> -->
+  <!--     <value>160</value> -->
+  <!--   </property> -->
+  <!--   <property> -->
+  <!--     <name>mapred.reduce.tasks</name> -->
+  <!--     <value>20</value> -->
+  <!--   </property> -->
+  <!--   <property> -->
+  <!--     <name>mapred.min.split.size</name> -->
+  <!--     <value>9223372036854775807</value> -->
+  <!--   </property> -->
+  <!--   <property> -->
+  <!--     <name>mapreduce.input.fileinputformat.split.minsize</name> -->
+  <!--     <value>9223372036854775807</value> -->
+  <!--   </property> -->
+  <property>
+    <name>mapred.reduce.slowstart.completed.maps</name>
+    <value>0</value>
+  </property>
+  <property>
+    <name>mapred.child.java.opts</name>
+    <value>-Xmx4096m</value>
+  </property>
+</configuration>

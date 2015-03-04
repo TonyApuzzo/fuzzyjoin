@@ -1,0 +1,396 @@
+<!DOCTYPE experiments_description SYSTEM "SIGMOD-2010-RWE.dtd">
+<!--
+Copyright 2010 The Regents of the University of California
+
+Licensed under the Apache License, Version 2.0 (the "License"); you
+may not use this file except in compliance with the License.  You
+may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS"; BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+implied.  See the License for the specific language governing
+permissions and limitations under the License.
+
+Author: Rares Vernica <rares (at) ics.uci.edu>
+-->
+<experiments_description>
+  <paper id="146" title="Efficient Parallel Set-Similarity Joins Using MapReduce" />
+
+  <!-- ------------ -->
+  <!-- - HARDWARE - -->
+  <!-- ------------ -->
+  <machine id="asterix-master">
+    <hardware>
+      <class>server</class>
+      <proc count="1"><!-- cat /proc/cpuinfo -->
+        <make>Intel</make>
+        <model>Xeon</model>
+        <cores>1</cores>
+        <bit>32</bit>
+        <GHz>3.06</GHz>
+      </proc>
+      <memory megabytes="4096"/><!-- cat /proc/meminfo -->
+      <disk count="1" RAIDlevel=""><!-- sudo lshw | grep -B 10 sda -->
+        <interface>SCSI</interface>
+        <gigabytes>73</gigabytes>
+        <RPM>10000</RPM>
+      </disk>
+      <comment>Used for Hadoop NameNode and JobTracker.</comment>
+    </hardware>
+    <os softwares="java hadoop python pychart pssh">
+      <linux>
+        <distribname>Ubuntu</distribname><!-- cat /etc/issue -->
+        <distribno>9.10</distribno>
+        <kernel>2.6.31-19</kernel><!-- uname -a -->
+      </linux>
+    </os>
+  </machine>
+
+  <machine id="asterix-node">
+    <hardware>
+      <proc count="1">
+        <make>Intel</make>
+        <model>Xeon</model>
+        <cores>4</cores>
+        <bit>64</bit>
+        <GHz>2.27</GHz>
+      </proc>
+      <memory megabytes="12288" />
+      <disk count="4" RAIDlevel="">
+        <interface>SATA</interface>
+        <gigabytes>300</gigabytes>
+        <RPM>10000</RPM>
+      </disk>
+    </hardware>
+    <os softwares="java hadoop">
+      <linux>
+        <distribname>Ubuntu</distribname>
+        <distribno>9.10</distribno>
+        <kernel>2.6.31-19</kernel>
+      </linux>
+    </os>
+  </machine>
+
+  <network id="asterix" type="1 Gbit/s shared ethernet">
+    <machineset mkey="asterix-master" howmany="1" />
+    <machineset mkey="asterix-node" howmany="10" />
+  </network>
+
+  <!-- ------------ -->
+  <!-- - SOFTWARE - -->
+  <!-- ------------ -->
+  <software id="java">
+    <name>Sun JDK</name>
+    <function>Compile and run source code</function>
+    <version>6</version>
+    <downloadURL>http://java.sun.com/javase/</downloadURL>
+  </software>
+
+  <software id="hadoop">
+    <name>Apache Hadoop</name>
+    <function>MapReduce framework</function>
+    <version>0.20.1</version>
+    <downloadURL>http://hadoop.apache.org/common/releases.html</downloadURL>
+    <comment>Source code is compatible with Hadoop 0.18.3.</comment>
+  </software>
+ 
+ <software id="python">
+    <name>Python</name>
+    <function>Process experiment results and generate figures</function>
+    <version>1.6</version>
+    <downloadURL>http://www.python.org/download/</downloadURL>
+  </software>
+
+  <software id="pssh">
+    <name>pssh</name>
+    <function>Copy Hadoop configuration files and run commands on
+    cluster nodes</function>
+    <version>1.4.3</version>
+    <downloadURL>http://www.theether.org/pssh/</downloadURL>
+    <comment>On Ubuntu do: sudo apt-get install pssh</comment>
+  </software>
+
+  <!-- ---------------- -->
+  <!-- - EXPERIMENTS  - -->
+  <!-- ---------------- -->
+  <experiment id1="Figure 8" hw_recommended="asterix">
+    <dataset>DBLP x5-x25</dataset>
+    <install>
+IMPORTANT NOTE: The experiments scripts will format the HDFS, replace
+the Hadoop configuration files and restart your Hadoop cluster. Please
+backup your files and proceed with caution.
+
+IMPORTANT NOTE: Please see fuzzyjoin-hadoop/README or
+fuzzyjoin-hadoop/README.html first for general usage and a Quick Start
+guide.
+
+Compile
+=======
+Type:
+cd fuzzyjoin/fuzzyjoin-hadoop ; ant
+
+Setup
+=====
+
+Each Experiment consists of multiple Setups. For each Setup the Hadoop
+cluster is stopped and reconfigured, and the HDFS is formatted. After
+that, the data is loaded, duplicated and balanced. A new Setup is
+initialized when the dataset, dataset size or number of nodes changes.
+
+For example, in Figure 8 we use three dataset sizes DBLP x5, x10 and
+x25. For each dataset size we initialize a new Setup.
+
+Scripts Configuration
+---------------------
+
+First edit the fuzzyjoin/fuzzyjoin-hadoop/resources/util/conf.sh to
+fit your system. You should set the following:
+
+H_HOME -- path to your Hadoop instance
+
+HDFS_FORMAT  -- command to remove the HDFS directories on each node
+
+MEM_MAX -- maximum memory available at each node, excluding the memory
+necessary to run the Hadoop daemons
+
+CORE_MAX -- number of cores at each node (ideally this is the same as
+the number of disks)
+
+LOCAL_DATA_RAW_DBLP -- local path for the dblp.raw.txt; download from
+http://asterix.ics.uci.edu/data/dblp.raw.txt.gz and unzip
+
+LOCAL_DATA_RAW_CITESEERX -- local path for the csx.raw.txt; download
+from http://asterix.ics.uci.edu/data/csx.raw.txt.gz and unzip
+
+Hadoop Configuration
+--------------------
+
+In order to swap between different Hadoop configurations the scripts
+for running the experiments assume a particular structure of the
+hadoop/conf directory. The contents of our hadoop/conf directory is in
+fuzzyjoin/fuzzyjoin-hadoop/resources/conf/hadoop/asterix. Use that
+directory as a starting point. The following files and directories are
+required in your hadoop/conf directory:
+
+hadoop-env-batch.sh
+core-site-batch.xml
+hdfs-site-batch.xml
+mapred-site-batch.xml
+slaves-000/
+  slaves-002 -- slaves for 2 nodes cluster size
+  slaves-004 --            4
+  slaves-008 --            8
+  slaves-010 --           10
+masters-000
+  masters-010 -- master
+
+Each of the "*-batch.(sh|xml)" file will replace its equivalent
+without "-batch" in the file name. When a new Setup is initialized,
+the non-"-batch" file is removed and a link between the "-batch" file
+to the non-"-batch" file is created.
+
+For example "core-site-batch.xml" will replace "core-site.xml". When
+a new Setup is initialized, the "core-site.xml" file is removed and
+"core-site.xml" becomes a symbolic link of "core-site-batch.xml".
+
+The Hadoop settings used in the experiments are described in the paper
+and set in the appropriate files in the
+fuzzyjoin/fuzzyjoin-hadoop/resources/conf/hadoop/asterix directory.
+    </install>
+    <howto>
+Type: 
+cd fuzzyjoin/fuzzyjoin-hadoop/resources/rwe/ ; ./figure_8.sh 
+
+Estimated running time: 3h
+
+Results
+-------
+
+The script will generate the figures and print the path to them. The
+numbers plotted in each figure are stored on files in the same
+directories (or the child directories) as the figure. If applicable,
+the script will also print the path to the file containing the numbers
+in the table.
+
+By default the results are stored in the
+fuzzyjoin/fuzzyjoin-hadoop/exps directory. The structure of the "exps"
+directory is the following:
+
+ exps 
+  |
+  +- CLUSTER 
+     | (e.g., asterix)
+     |
+     +- CASE 
+        | (e.g. dblp, pub)
+        | ("dblp" denotes the self-join case using the DBLP dataset,
+        | "pub" denotes the R-S join case using the DBLP and CITESEERX
+        | datasets)
+        |
+        +- EXPERIMENT_TYPE 
+           | (e.g., perf, scaleup, speedup)
+           | ("perf" denotes keeping the cluster size constant and
+           | varying the dataset size, "scaleup" denotes keeping the
+           | dataset size constant and varying the cluster size,
+           | "speedup" denotes varying the dataset size and the
+           | cluster size with the same factor)
+           |
+           +- STAGE
+           |  | (e.g., 1, 2, 3 )
+           |  | ("1" stands for Stage 1, etc.)
+           |  |
+           |  +- COMBINATION
+           |     | (e.g., b, i, p)
+           |     | (The letters have the following meaning:
+           |     |  Stage 1: "b": BTO
+           |     |           "i": OPTO
+           |     |  Stage 2: "i": BK
+           |     |           "p": PK
+           |     |  Stage 3: "b": BRJ
+           |     |           "i": OPRJ)
+           |     |
+           |     +- DATASET_SIZE.txt
+           |     |  (e.g., 5.txt, 10.txt, 25.txt)
+           |     |  (Running time of three runs for a certain dataset
+           |     |  size. "5" denotes that the dataset was increased 5
+           |     |  times, etc.)
+           |     |
+           |     +- DATASET_SIZE_log.txt
+           |     |  (e.g., 5_log.txt, 10_log.txt, 25_log.txt)                  
+           |     |  (Lists the name of the file which stores the log
+           |     |  for three runs for a certain dataset size.) 
+           |     |
+           |     +- CLUSTER_SIZE.txt
+           |     |  (e.g., 002.txt, 004.txt, 008.txt, 010.txt)
+           |     |  (Running time of three runs for a certain cluster
+           |     |  size. "002" denotes a cluster with 2 nodes, etc.)
+           |     |
+           |     +- DATASET_SIZE_log.txt
+           |     |  (e.g., 002_log.txt, 004_log.txt, 008_log.txt, 010_log.txt)
+           |     |  (Lists the name of the file which stores the log
+           |     |  for three runs for a certain cluster size.)
+           |     |
+           |     +- avg.txt
+           |        (Average for the considered dataset or cluster sizes.)
+           |
+           +- END-TO-END_COMBINATION
+              | (e.g., bib, bpb, bpi)
+              | ("bib" denotes the alternatives used in each stage,
+              | first "b" denotes the alternative in the first stage,
+              | "i" denotes the alternative for the second stage, and
+              | second "b" denotes the alternative for the third
+              | stage.)
+              |
+              +- avg.txt
+                 (Average for the considered dataset or cluster sizes.)
+    </howto>
+    <variations>
+1. Use a different join field
+2. Use a different dataset.
+3. Use a different dataset size. 
+4. Use a different cluster size.
+
+See more experiments in the long version available at:
+http://asterix.ics.uci.edu/pub/sigmod10-vernica-long.pdf
+    </variations>
+  </experiment>
+
+  <experiment id1="Figure 9, 10 and Table 1" hw_recommended="asterix">
+    <dataset>DBLP x10</dataset>
+    <install>
+See "install" for "Figure 8."
+    </install>
+    <howto>
+Type: 
+cd fuzzyjoin/fuzzyjoin-hadoop/resources/rwe/ ; ./figure_9_10_table_1.sh 
+
+Estimated running time: 3.5h
+
+Results:
+See "howto" for "Figure 8."
+    </howto>
+    <variations>
+See "variations" for "Figure 8."
+    </variations>
+  </experiment>
+
+  <experiment id1="Figure 11 and Table 2" hw_recommended="asterix">
+    <dataset>DBLP x5-x25</dataset>
+    <install>
+See "install" for "Figure 8."
+    </install>
+    <howto>
+Type: 
+cd fuzzyjoin/fuzzyjoin-hadoop/resources/rwe/ ; ./figure_11_table_2.sh 
+
+Estimated running time: 3h
+
+Results:
+See "howto" for "Figure 8."
+    </howto>
+    <variations>
+See "variations" for "Figure 8."
+    </variations>
+  </experiment>
+
+  <experiment id1="Figure 12" hw_recommended="asterix">
+    <dataset>DBLP x5-x25, CITESEERX x5-x25</dataset>
+    <install>
+See "install" for "Figure 8."
+    </install>
+    <howto>
+Type: 
+cd fuzzyjoin/fuzzyjoin-hadoop/resources/rwe/ ; ./figure_12.sh 
+
+Estimated running time: 6.5h
+
+Results:
+See "howto" for "Figure 8."
+    </howto>
+    <variations>
+See "variations" for "Figure 8."
+    </variations>
+  </experiment>
+
+  <experiment id1="Figure 13" hw_recommended="asterix">
+    <dataset>DBLP x10, CITESEERX x10</dataset>
+    <install>
+See "install" for "Figure 8."
+    </install>
+    <howto>
+Type: 
+cd fuzzyjoin/fuzzyjoin-hadoop/resources/rwe/ ; ./figure_13.sh 
+
+Estimated running time: 10h
+
+Results:
+See "howto" for "Figure 8."
+    </howto>
+    <variations>
+See "variations" for "Figure 8."
+    </variations>
+  </experiment>
+
+  <experiment id1="Figure 14" hw_recommended="asterix">
+    <dataset>DBLP x5-x25, CITESEERX x5-x25</dataset>
+    <install>
+See "install" for "Figure 8."
+    </install>
+    <howto>
+Type: 
+cd fuzzyjoin/fuzzyjoin-hadoop/resources/rwe/ ; ./figure_14.sh 
+
+Estimated running time: 8h
+
+Results:
+See "howto" for "Figure 8."
+    </howto>
+    <variations>
+See "variations" for "Figure 8."
+    </variations>
+  </experiment>
+
+</experiments_description>

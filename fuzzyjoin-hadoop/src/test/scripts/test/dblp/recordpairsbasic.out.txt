@@ -1,0 +1,66 @@
+Multi-Job started: Thu Dec 09 10:54:04 PST 2010
+FuzzyJoinDriver(RecordPairsBasic.phase1)
+  Input Path:  {hdfs://localhost:9000/data/records-000
+                hdfs://localhost:9000/data/ridpairs-000}
+  Output Path: hdfs://localhost:9000/data/recordpairs.phase1-000
+  Map Jobs:    4
+  Reduce Jobs: 1
+  Properties:  {fuzzyjoin.similarity.name=Jaccard
+                fuzzyjoin.similarity.threshold=.8
+                fuzzyjoin.tokenizer=Word
+                fuzzyjoin.tokens.package=Scalar
+                fuzzyjoin.tokens.lengthstats=false
+                fuzzyjoin.ridpairs.group.class=TokenIdentity
+                fuzzyjoin.ridpairs.group.factor=1
+                fuzzyjoin.data.tokens=
+                fuzzyjoin.data.joinindex=}
+Job started: Thu Dec 09 10:54:04 PST 2010
+10/12/09 10:54:05 INFO mapred.FileInputFormat: Total input paths to process : 6
+10/12/09 10:54:05 INFO mapred.JobClient: Running job: job_201012081555_0005
+10/12/09 10:54:06 INFO mapred.JobClient:  map 0% reduce 0%
+10/12/09 10:54:21 INFO mapred.JobClient:  map 31% reduce 0%
+10/12/09 10:54:24 INFO mapred.JobClient:  map 33% reduce 0%
+10/12/09 10:54:28 INFO mapred.JobClient:  map 43% reduce 0%
+10/12/09 10:54:31 INFO mapred.JobClient:  map 50% reduce 0%
+10/12/09 10:54:35 INFO mapred.JobClient:  map 64% reduce 0%
+10/12/09 10:54:38 INFO mapred.JobClient:  map 66% reduce 0%
+10/12/09 10:54:41 INFO mapred.JobClient:  map 83% reduce 0%
+10/12/09 10:54:44 INFO mapred.JobClient:  map 100% reduce 0%
+10/12/09 10:54:59 INFO mapred.JobClient:  map 100% reduce 11%
+10/12/09 10:55:02 INFO mapred.JobClient:  map 100% reduce 16%
+10/12/09 10:55:11 INFO mapred.JobClient:  map 100% reduce 27%
+10/12/09 10:55:17 INFO mapred.JobClient:  map 100% reduce 0%
+10/12/09 10:55:19 INFO mapred.JobClient: Job complete: job_201012081555_0005
+10/12/09 10:55:19 INFO mapred.JobClient: Counters: 13
+10/12/09 10:55:19 INFO mapred.JobClient:   Job Counters 
+10/12/09 10:55:19 INFO mapred.JobClient:     Launched reduce tasks=1
+10/12/09 10:55:19 INFO mapred.JobClient:     Launched map tasks=6
+10/12/09 10:55:19 INFO mapred.JobClient:     Data-local map tasks=6
+10/12/09 10:55:19 INFO mapred.JobClient:     Failed reduce tasks=1
+10/12/09 10:55:19 INFO mapred.JobClient:   FileSystemCounters
+10/12/09 10:55:19 INFO mapred.JobClient:     HDFS_BYTES_READ=343233612
+10/12/09 10:55:19 INFO mapred.JobClient:     FILE_BYTES_WRITTEN=367650793
+10/12/09 10:55:19 INFO mapred.JobClient:   Map-Reduce Framework
+10/12/09 10:55:19 INFO mapred.JobClient:     Combine output records=0
+10/12/09 10:55:19 INFO mapred.JobClient:     Map input records=1577105
+10/12/09 10:55:19 INFO mapred.JobClient:     Spilled Records=1886193
+10/12/09 10:55:19 INFO mapred.JobClient:     Map output bytes=361887070
+10/12/09 10:55:19 INFO mapred.JobClient:     Map input bytes=343233612
+10/12/09 10:55:19 INFO mapred.JobClient:     Combine input records=0
+10/12/09 10:55:19 INFO mapred.JobClient:     Map output records=1886193
+java.io.IOException: Job failed!
+	at org.apache.hadoop.mapred.JobClient.runJob(JobClient.java:1252)
+	at edu.uci.ics.fuzzyjoin.hadoop.FuzzyJoinDriver.run(FuzzyJoinDriver.java:178)
+	at edu.uci.ics.fuzzyjoin.hadoop.recordpairs.RecordPairsBasic.main(RecordPairsBasic.java:155)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.hadoop.util.ProgramDriver$ProgramDescription.invoke(ProgramDriver.java:68)
+	at org.apache.hadoop.util.ProgramDriver.driver(ProgramDriver.java:139)
+	at edu.uci.ics.fuzzyjoin.hadoop.FuzzyJoinDriver.main(FuzzyJoinDriver.java:120)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.hadoop.util.RunJar.main(RunJar.java:156)

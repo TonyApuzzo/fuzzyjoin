@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<configuration>
+  <property>
+    <name>fuzzyjoin.data.dir</name>
+    <value>/fuzzyjoin/dblp</value>
+  </property>
+  <property>
+    <name>fuzzyjoin.similarity.threshold</name>
+    <value>.8</value>
+  </property>
+  <property>
+    <name>fuzzyjoin.record.data</name>
+    <value>2,3</value>
+  </property>
+  <property>
+    <name>fuzzyjoin.data.norecords</name>
+    <value>1268017</value>
+    <description>Only used for RecordBuild and RecordGenerate.
+    </description>
+  </property>
+  <property>
+    <name>fuzzyjoin.data.copy</name>
+    <value>25</value>
+  </property>
+</configuration>

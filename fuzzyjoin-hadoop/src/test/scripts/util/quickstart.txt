@@ -1,0 +1,44 @@
+-*- org -*-
+* Standalone
+> cp ~/asterix/hadoop-0.20.0/conf/*.xml input/
+> hadoop jar ~/asterix/hadoop-0.20.0/hadoop-0.20.0-examples.jar grep input output 'dfs[a-z.]+'
+> cat output/*
+* Pseudo-Distributed
+> ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa
+> cat ~/.ssh/id_dsa.pub > ~/.ssh/authorized_keys2
+> hadoop namenode -format
+> start-all.sh
+jobtracker might not start on the first try
+> start-all.sh
+> jps
+
+> hadoop fs -mkdir input
+> hadoop fs -put ~/asterix/hadoop-0.20.0/conf/*.xml input
+
+> hadoop jar ~/asterix/hadoop-0.20.0/hadoop-0.20.0-examples.jar grep input output 'dfs[a-z.]+'
+> hadoop fs -ls output
+> hadoop fs -cat output/part-00000
+> hadoop fs -rmr output
+
+> hadoop jar ~/asterix/hadoop-0.20.0/hadoop-0.20.0-examples.jar wordcount input output
+> hadoop fs -ls output
+> hadoop fs -cat output/part-r-00000
+> hadoop fs -rmr output
+
+> hadoop jar ~/asterix/hadoop-0.20.0/hadoop-0.20.0-examples.jar wordcount -Dmapred.reduce.tasks=3 input output
+> hadoop fs -ls output
+> hadoop fs -cat output/part-r-00000
+> hadoop fs -cat output/part-r-00001
+> hadoop fs -cat output/part-r-00002
+> hadoop fs -rmr output
+
+> stop-all.sh
+* Troubleshotting
+*** jobtracker.info could only be replicated to 0 nodes, instead of 1
+1. Delete everything related to HDFS from /tmp. E.g., hadoop-rares-*,
+hsperfdata_rares
+2. > hadoop namenode -format
+*** Incompatible namespaceIDs
+see above
+*** Refromating makes the HDFS unusable
+see above

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>FAQ</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2011-04-12 09:58:19 PDT"/>
+<meta name="author" content="Rares Vernica"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<style type="text/css">code{font-size:smaller;}</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+<div id="content">
+<div id="org-div-home-and-up" style="text-align:right;font-size:70%;white-space:nowrap;">
+ <a accesskey="h" href="http://asterix.ics.uci.edu/fuzzyjoin-mapreduce/"> UP </a>
+ |
+ <a accesskey="H" href="http://asterix.ics.uci.edu/fuzzyjoin-mapreduce/"> HOME </a>
+</div>
+
+<h1 class="title">FAQ</h1>
+
+<p>Author: Rares Vernica &lt;rares (at) ics.uci.edu&gt;
+</p>
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 Copyright </a></li>
+<li><a href="#sec-2">2 What should I do if I get <code>java.lang.OutOfMemoryError: Java heap space</code> in the Map phase of Stage 2, Kernel (<code>ridpairsimproved</code> or <code>ridpairsppjoin</code>)? </a></li>
+<li><a href="#sec-3">3 Where can I get more help? </a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Copyright </h2>
+<div class="outline-text-2" id="text-1">
+
+<p>Copyright 2010-2011 The Regents of the University of California
+</p>
+<p>
+Licensed under the Apache License, Version 2.0 (the "License"); you
+may not use this file except in compliance with the License.  You
+may obtain a copy of the License at
+</p>
+<p>
+<a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a>
+</p>
+<p>
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS"; BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+implied.  See the License for the specific language governing
+permissions and limitations under the License.
+</p></div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> What should I do if I get <code>java.lang.OutOfMemoryError: Java heap space</code> in the Map phase of Stage 2, Kernel (<code>ridpairsimproved</code> or <code>ridpairsppjoin</code>)? </h2>
+<div class="outline-text-2" id="text-2">
+
+<p>Stage 1, Token Ordering (<code>tokesbasic</code> or <code>tokensimproved</code>) produces a
+list of unique tokens that are loaded into memory by Stage 2. The list
+is output in the <code>tokens.n</code> directory in HDFS. The reason for the
+<code>OutOfMemoryError</code> might be the fact that the list of tokens does not
+fit into memory.
+</p>
+<p>
+The first thing you should check is whether you are using the right
+tokenizer for your data. For example, if each join field value is a
+list of words, then the word tokenizer would be
+appropriate. Otherwise, if each join field value is a contiguous string
+of characters, then a n-gram tokenizer might be appropriate. The
+tokenizer can be specified in the command line with the
+<code>-Dfuzzyjoin.tokenizer=</code> option or in the XML file specified with the
+<code>-conf</code> option. For more details please see:
+</p>
+
+
+
+<pre class="example">hadoop/fuzzyjoin/resources/conf/fuzzyjoin/default.xml
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Where can I get more help? </h2>
+<div class="outline-text-2" id="text-3">
+
+<p>Please email Rares Vernica &lt;rares (at) ics.uci.edu&gt; with any questions
+you might have.
+</p></div>
+</div>
+<div id="postamble">
+<p class="date"> Date: 2011-04-12 09:58:19 PDT</p>
+<p class="creator">HTML generated by org-mode 7.4 in emacs 24</p>
+</div>
+</div>
+</body>
+</html>

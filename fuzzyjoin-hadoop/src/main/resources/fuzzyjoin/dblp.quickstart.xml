@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<configuration>
+  <property>
+    <name>fuzzyjoin.data.dir</name>
+    <value>dblp-small</value>
+  </property>
+  <property>
+    <name>fuzzyjoin.similarity.threshold</name>
+    <value>.5</value>
+  </property>
+  <property>
+    <name>fuzzyjoin.record.data</name>
+    <value>2,3</value>
+  </property>
+  <property>
+    <name>fuzzyjoin.data.norecords</name>
+    <value>100</value>
+    <description>
+      Number of records to use from the dataset. Only used by
+      RecordBalance and RecordGenerate. It is ignored by the other
+      tasks. The default value is empty (considers the entire dataset)
+      and it is required for RecordGenerate (for generating new RID).
+    </description>
+  </property>
+</configuration>

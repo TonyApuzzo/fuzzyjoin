@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<configuration>
+ <property>
+  <name>fuzzyjoin.data.dir</name>
+  <value>/data/enron</value>
+ </property>
+  <property>
+  <name>fuzzyjoin.data.record.data</name>
+  <value>8</value>
+ </property>
+ <property>
+  <name>fuzzyjoin.data.raw</name>
+  <value>enron.txt</value>
+  <description>Only used for RecordBuild. Not needed if there is
+   only one file in the "raw" directory.</description>
+ </property>
+ <property>
+  <name>fuzzyjoin.data.norecords</name>
+  <value>500000</value>
+  <description>Only used for RecordBuild and RecordGenerate.
+  </description>
+ </property>
+ <property>
+  <name>fuzzyjoin.data.copy</name>
+  <value>1</value>
+ </property>
+ <property>
+  <name>fuzzyjoin.similarity.threshold</name>
+  <value>.95</value>
+ </property>
+ <property>
+  <name>fuzzyjoin.tokens.package</name>
+  <value>array</value>
+ </property>
+ <property>
+  <name>fuzzyjoin.tokens.lengthstats</name>
+  <value>true</value>
+ </property>
+ <property>
+  <name>fuzzyjoin.data.dir.output.suffix</name>
+  <value></value>
+ </property>
+ <!--
+  ================================================================
+  Hadoop
+  ================================================================
+ -->
+ <!--
+ <property>
+  <name>mapred.min.split.size</name>
+  <value>9223372036854775807</value>
+  <description>Set to Long.MAX_VALUE to have only one map.
+  </description>
+ </property>
+ -->
+ <property>
+  <name>mapred.child.java.opts</name>
+  <value>-Xmx2g</value>
+ </property>
+ <property>
+  <name>mapred.map.tasks</name>
+  <value>100</value>
+ </property>
+ <property>
+  <name>mapred.reduce.tasks</name>
+  <value>100</value>
+ </property>
+ <property>
+  <name>mapred.task.timeout</name>
+  <value>6000000</value>
+ </property>
+</configuration>

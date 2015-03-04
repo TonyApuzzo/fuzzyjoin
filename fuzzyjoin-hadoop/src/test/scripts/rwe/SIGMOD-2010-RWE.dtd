@@ -1,0 +1,189 @@
+<!-- The top-level element must include:
+     - ID and title of your paper
+     - At least one among: a machine, and a network of machines. These 
+     represent the hadware used in the experiments.
+     - Optionally, various softwares required to run your experiments
+     (other than the software you provided in the FTP site)
+     - For each experiments which the committee should attempt to repeat,
+     an experiment element.
+     - For each experiment which you consider unrepeatable, a
+     nonrepexperiment element explaining briefly why. 
+     - Optionally, a comment element where you can send us your comments
+     on the repeatability assessment procedure.
+-->
+<!ELEMENT experiments_description (paper, machine*,software*,network*,experiment*, nonrepexperiment*, comment?)>
+
+<!-- Specify the id and name of your SIGMOD 2010 paper.
+-->
+<!ELEMENT paper EMPTY>
+<!ATTLIST paper id CDATA #REQUIRED title CDATA #REQUIRED> 
+
+<!-- Use machine to describe an individual computer used in the experiments. 
+     An experiment requiring several machines should be described using a 
+     network element - see below. 
+-->
+<!ELEMENT machine (hardware, os)>
+<!ATTLIST machine id ID #REQUIRED>
+
+<!-- Use hardware to describe a machine's hardware.
+     On Linux machines, hardware information can be found by typing dmesg 
+     shortly after rebooting.
+     On Windows machines, it can be found under the Control Panel. 
+     What is important for us is the resources actually available for the
+     experiment. For instance, if your machine has 2GB of RAM but you only
+     allowed your software to use 1GB for an experiment, declare 1GB here.
+-->
+<!ELEMENT hardware (class, proc, memory, disk, (comment)?)>
+<!ELEMENT class (#PCDATA)> <!-- e.g., laptop, desktop, workstation, server, etc. -->
+<!-- On many Linux machines, processor information can be found in 
+     the file /proc/cpuinfo. -->
+<!ELEMENT proc (make, model, cores, bit, GHz)>
+<!ATTLIST proc count CDATA #REQUIRED>
+<!ELEMENT make (#PCDATA)>
+<!ELEMENT model (#PCDATA)>
+<!ELEMENT cores (#PCDATA)>
+<!ELEMENT bit (#PCDATA)>
+<!ELEMENT GHz (#PCDATA)>
+<!ELEMENT memory EMPTY>
+<!ATTLIST memory megabytes CDATA #REQUIRED>
+<!ELEMENT disk (interface, gigabytes, RPM)>
+<!ATTLIST disk count CDATA #REQUIRED RAIDlevel CDATA #REQUIRED>
+<!ELEMENT interface (#PCDATA)>
+<!ELEMENT gigabytes (#PCDATA)> 
+<!ELEMENT RPM (#PCDATA)> 
+
+<!-- Use os to describe an OS configuration and any auxiliary software 
+     (compilers, libraries, database systems etc.) 
+     If your experiment uses a virtual machine, describe the characteristics 
+     of that virtual machine. 
+-->
+<!ELEMENT os (windows|linux|mac|sun|otheros)>
+<!ATTLIST os softwares IDREFS #IMPLIED>
+
+<!ELEMENT windows (version, (comment)?)>
+
+<!ELEMENT version (#PCDATA)>
+
+<!ELEMENT linux (distribname, distribno, kernel, comment?)>
+<!-- Use distribname to specify the family name, e.g., SuSE, CentOS etc.
+-->
+<!ELEMENT distribname (#PCDATA)>
+
+<!-- Use distribno to specify the distribution number, e.g., 2.2.10 etc. 
+     Under Linux, the distribution number and kernel information can be 
+     determined by typing uname -a.
+-->
+<!ELEMENT distribno (#PCDATA)>
+<!ELEMENT kernel (#PCDATA)>
+
+<!ELEMENT mac (version, kernel, comment?)>
+
+<!ELEMENT sun (name, version, comment?)>
+
+<!ELEMENT otheros (name, version, comment?)>
+
+<!ELEMENT comment (#PCDATA)>
+
+<!-- Use software to describe any software (other than the code you
+     provided in the FTP site) needed in order to run or compile the code. 
+     Examples include: compilers used to compile your code, 
+     runtime engines, libraries, simulators, database systems it needs 
+     to interact with, software for analyzing the data and producing 
+     graphs etc. 
+     If your experiment was run using a virtualization platform, 
+     describe the virtual image player, and the actual virtual image used, 
+     as two distinct pieces of software; be sure to include their URLs.
+-->
+<!ELEMENT software (name, function, version?, downloadURL?, comment?)>
+<!ATTLIST software id ID #REQUIRED>
+
+<!ELEMENT name (#PCDATA)>
+
+<!-- Use function to briefly specify the role that this software plays 
+     in the setting. This will enable e.g. replacing it with a similar 
+     existing component if we are not able to obtain the exact software 
+     you used. 
+-->
+<!ELEMENT function (#PCDATA)>
+
+<!-- Use downloadURL to specify where a free or trial version 
+     of the software can be found. 
+-->
+<!ELEMENT downloadURL (#PCDATA)>
+
+
+<!-- Elements network and machineset should be used  for experiments 
+     ran on several machines.
+     Use machineset to specify a set of identical machines: mkey should be 
+     a foreign key pointing to an existing declared machine element; 
+     howmany should specify how many machines of this kind are part of 
+     the machine set. 
+-->
+<!ELEMENT machineset EMPTY>
+<!ATTLIST machineset mkey IDREF #REQUIRED howmany CDATA #REQUIRED>
+
+<!-- Use network to specify a set of machines used in an experiment. 
+     The network may include homogeneous subsets of identical machines, 
+     each such subset being described by a machineset element. If all
+     machines are different, use 1-sized machinesets. 
+-->
+<!ELEMENT network (machineset+, comment?)>
+<!ATTLIST network id ID #REQUIRED type CDATA #REQUIRED>
+
+<!-- For each experiment that we may reproduce, provide:  its main id 
+     (typically "Figure X" or "Table Y"),  its secondary id if any (e.g.: 
+     "left" or "top"), and: either the key of a machine, or the key of a 
+     network, depending on the hardware used for this experiment. 
+     'hw_recommended' specifies the system you used; optionally,
+     'hw_minimal' and/or 'hw_alternative' specify minimal and/or alternative
+     system specifications; please give further details in the 'variations'
+     instructions.
+-->
+<!ELEMENT experiment (dataset*, install, howto, variations)>
+<!ATTLIST experiment id1 CDATA #REQUIRED  id2 CDATA #IMPLIED
+hw_recommended IDREF #REQUIRED hw_minimal IDREF #IMPLIED hw_alternative IDREF #IMPLIED>
+
+<!-- Use dataset to specify the dataset(s) to be used in the experiment. 
+     For each dataset, provide its download URL, or the path leading to 
+     the file in your FTP space, or the information necessary to produce it 
+     using a generator etc. 
+     If the data set of the experiment is not available, supply a similar
+     smaller synthetic one when possible. 
+-->
+<!ELEMENT dataset (#PCDATA)>
+
+<!-- Specify what needs to be installed and how in order to perform 
+      this experiment. If the installation is the same as for a previously 
+      described experiment, just say so. -->
+<!ELEMENT install (#PCDATA)>
+
+<!-- Give the sequence of steps that need to be performed in order to 
+     run the experiment. 
+     Include: 
+     - any necessary pre-processing steps
+     - the commands actually performing the experiment
+     - the number of runs if any
+     - the operations needed to gather and analyse the results
+     - the production of graphs corresponding to those of the paper. 
+     If you cannot automatize producing the graphs, the numerical 
+     results should be in a simple format acceptable for standard 
+     plotting tools, e.g. CSV (comma-separated values).  
+     
+     The ideal description of a given step is the command line needed 
+     to run it. 
+-->
+<!ELEMENT howto (#PCDATA)>
+<!-- Please give instruction and/or recommendations how to vary and/or
+     extend your experiments - e.g., by using different datasets,
+     workloads, systems, parameters, etc. - beyond what you used for and
+     presented in your paper.
+-->
+<!ELEMENT variations (#PCDATA)>
+
+<!-- For all experiments which cannot be repeated due to IP, copyright or
+     other issues, use a nonrepexperiment element to explain why. 
+     Include primary and possibly secondary key as for repeatable 
+     experiments. 
+-->
+<!ELEMENT nonrepexperiment (#PCDATA)>
+<!ATTLIST nonrepexperiment id1 CDATA #REQUIRED id2 CDATA #IMPLIED>

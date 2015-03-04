@@ -1,0 +1,9 @@
+# hyrax/resources> java -jar bnd-0.0.378.jar wrap -properties fuzzyjoin-hadoop-1.0.0.bnd ../../hadoop/fuzzyjoin/hadoop_pre20/build/jar/fuzzyjoin-hadoop-1.0.0.jar
+# hyrax/resources> mv fuzzyjoin-hadoop-1.0.0.bar ../lib/edu.uci.ics.hadoop.fuzzyjoin_1.0.0.jar
+version=1.0
+Export-Package: edu.uci.ics.fuzzyjoin.hadoop.*;version=${version};-noimport:=true
+Bundle-Version: ${version}
+Bundle-Description: fuzzyjoin hadoop
+Bundle-Name: FuzzyJoin Hadoop
+Bundle-SymbolicName: edu.uci.ics.fuzzyjoin.hadoop
+-nouses= true

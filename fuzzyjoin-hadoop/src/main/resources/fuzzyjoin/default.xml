@@ -1,0 +1,156 @@
+<?xml version="1.0"?>
+<configuration>
+  <!-- |-----------------------------| -->
+  <!-- |- -- properties required -- -| -->
+  <!-- |-----------------------------| -->
+  <property>
+    <name>fuzzyjoin.data.dir</name>
+    <value></value>
+    <description>
+      Data root directory. Inside this directory additional
+      directories will be created by each MapReduce job. Raw data
+      needs to be in the ${fuzzyjoin.data.dir}/raw directory. The
+      default value is empty and it is required.
+    </description>
+  </property>
+  <property>
+    <name>fuzzyjoin.data.norecords</name>
+    <value></value>
+    <description>
+      Number of records to use from the dataset. Only used by
+      RecordBalance and RecordGenerate. It is ignored by the other
+      tasks. The default value is empty (considers the entire dataset)
+      and it is required for RecordGenerate (for generating new RID).
+    </description>
+  </property>
+  <!-- |----------------------------------------| -->
+  <!-- |- -- properties with default values -- -| -->
+  <!-- |----------------------------------------| -->
+  <!-- - -- data -- - -->
+  <property>
+    <name>fuzzyjoin.data.suffix.input</name>
+    <description>
+      Used to indicate joins. The value should be a list of two comma
+      separated prefixes used to indicate the first and second
+      datasets to be joined. Defined in
+      edu.uci.ics.fuzzyjoin.hadoop.FuzzyJoinDriver.
+    </description>
+  </property>
+  <!-- - -- tokenizer -- - -->
+  <property>
+    <name>fuzzyjoin.tokenizer</name>
+    <value>Word</value>
+    <description>
+      Tokenizer class. Set in edu.uci.ics.fuzzyjoin.Config.
+    </description>
+  </property>
+  <!-- - -- similarity -- - -->
+  <property>
+    <name>fuzzyjoin.similarity.threshold</name>
+    <value>.8</value>
+    <description>
+      Similarity threshold. Set in edu.uci.ics.fuzzyjoin.Config.
+    </description>
+  </property>
+  <property>
+    <name>fuzzyjoin.similarity.name</name>
+    <value>Jaccard</value>
+    <description>
+      Similarity class. Set in edu.uci.ics.fuzzyjoin.Config.
+    </description>
+  </property>
+  <!-- - -- record -- - -->
+  <property>
+    <name>fuzzyjoin.record.data</name>
+    <value>1</value>
+    <description>
+      Index of the fuzzy-join column (0 based). Multiple indices
+      separated by coma can be provided to compute the fuzzy-join on
+      their concatenation. Set in edu.uci.ics.fuzzyjoin.Config.
+    </description>
+  </property>
+  <property>
+    <name>fuzzyjoin.record.data1</name>
+    <value>1</value>
+    <description>
+      Index of the fuzzy-join column (0 based) for the second dataset
+      (in case of R-S joins). Multiple indices separated by coma can
+      be provided to compute the fuzzy-join on their
+      concatenation. Set in edu.uci.ics.fuzzyjoin.Config.
+    </description>
+  </property>
+  <!-- - -- Stage 1: Token Ordering -- - -->
+  <!-- - -- edu.uci.ics.fuzzyjoin.hadoop.tokens -- - -->
+  <property>
+    <name>fuzzyjoin.tokens.package</name>
+    <value>Scalar</value>
+    <description>
+      Type of the intermediate data. "Scalar" is the fastest. "Array"
+      allows collecting length statistics. Set in
+      edu.uci.ics.fuzzyjoin.hadoop.FuzzyJoinDriver.
+    </description>
+  </property>
+  <property>
+    <name>fuzzyjoin.tokens.lengthstats</name>
+    <value>false</value>
+    <description>
+      Collect join-value length statistics. Set in
+      edu.uci.ics.fuzzyjoin.hadoop.FuzzyJoinDriver.
+    </description>
+  </property>
+  <!-- - -- Stage 2: Kernel -- - -->
+  <!-- - -- edu.uci.ics.fuzzyjoin.hadoop.ridpairs -- - -->
+  <property>
+    <name>fuzzyjoin.ridpairs.group.class</name>
+    <value>TokenIdentity</value>
+    <description>
+      Class used to group (RID, Projection) pairs between Map and
+      Reduce. Set in edu.uci.ics.fuzzyjoin.hadoop.FuzzyJoinDriver.
+    </description>
+  </property>
+  <property>
+    <name>fuzzyjoin.ridpairs.group.factor</name>
+    <value>1</value>
+    <description>
+      Grouping factor for (RID, Projection) pairs sent between Map and
+      Reduce. This factor multiplied by the number of reducers yields
+      the total number of groups. Set in
+      edu.uci.ics.fuzzyjoin.hadoop.FuzzyJoinDriver.
+    </description>
+  </property>
+  <!-- |----------------------------------------| -->
+  <!-- |- -- properties used in experiments -- -| -->
+  <!-- |----------------------------------------| -->
+  <property>
+    <name>fuzzyjoin.data.copy</name>
+    <description>
+      Indicates the number of times the dataset is synthetically
+      increased. Defined in
+      edu.uci.ics.fuzzyjoin.hadoop.FuzzyJoinDriver.
+    </description>
+  </property>
+  <property>
+    <name>fuzzyjoin.data.crtcopy</name>
+    <description>
+      Indicates the current copy when the data is synthetically
+      increased. Defined in
+      edu.uci.ics.fuzzyjoin.hadoop.FuzzyJoinDriver.
+    </description>
+  </property>
+  <property>
+    <name>fuzzyjoin.data.copystart</name>
+    <description>
+      Indicates the copy to start from when the data is synthetically
+      increased. Defined in
+      edu.uci.ics.fuzzyjoin.hadoop.FuzzyJoinDriver.
+    </description>
+  </property>
+  <property>
+    <name>fuzzyjoin.data.dictionary.factor</name>
+    <description>
+      Indicated the number of times the dictionary should be increased
+      when new records are generated. Defined in
+      edu.uci.ics.fuzzyjoin.hadoop.FuzzyJoinDriver.
+    </description>
+  </property>
+</configuration>

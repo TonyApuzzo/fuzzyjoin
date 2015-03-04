@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<!-- Put site-specific property overrides in this file. -->
+
+<configuration>
+  <property>
+    <name>fs.default.name</name>
+    <value>hdfs://localhost:9000</value>
+  </property>
+
+ <property>
+    <name>fs.inmemory.size.mb</name>
+    <value>200</value>
+    <description>Larger amount of memory allocated for the in-memory
+    file-system used to merge map-outputs at the
+    reduces.</description>
+  </property>
+
+  <property>
+    <name>io.sort.factor</name>
+    <value>100</value>
+    <description>The number of streams to merge at once while sorting
+    files.  This determines the number of open file handles.</description>
+  </property>
+
+  <property>
+    <name>io.sort.mb</name>
+    <value>200</value>
+    <description>The total amount of buffer memory to use while sorting 
+    files, in megabytes.  By default, gives each merge stream 1MB, which
+    should minimize seeks.</description>
+  </property>
+
+  <property>
+    <name>io.file.buffer.size</name>
+    <value>131072</value>
+    <description>The size of buffer for use in sequence files.
+    The size of this buffer should probably be a multiple of hardware
+    page size (4096 on Intel x86), and it determines how much data is
+    buffered during read and write operations.</description>
+  </property>
+
+</configuration>

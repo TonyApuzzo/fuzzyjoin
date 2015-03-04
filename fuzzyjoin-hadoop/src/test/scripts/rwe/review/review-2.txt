@@ -1,0 +1,27 @@
+I am able to use only 1 machine (Intel Core2 Duo @ 2.66GHz, 2GB RAM, running Windows XP) for the experiment in the review period. There is a large gap in the computing power between the authors and mine. Also, the primary reviewer gives a very detailed report on the repeatability aspect but does not have enough time to do a workability analysis. So, I have ignored the repeatability test and put my focus on the workability aspect, in the pseudo-distributed mode of Hadoop with a single node.
+
+My dataset
+==========
+
+I am still using DBLP and CiteSeerX for the experiment but the number of tuples are reduced to around 40k records each. (The first around 40k records are kept in my dataset while other records are removed.)
+
+Self join (Sec. 6.1)
+====================
+
+I am not familiar with Hadoop but the authors have provided a very good tutorial. The quick start example from authors helped me a lot in understanding Hadoop and learn how to use their program.
+
+First, I try to do a self join on my shrunk DBLP dataset, with the configuration in the quick start example. With a flexible main program (/target/fuzzyjoin-hadoop-0.0.1.jar), I can perform a similar experiment like Fig. 8 (perform a self join on DBLP and obtain the execution time of each phase). At first, it takes me some time to figure out the meaning of the parameters. The algorithms are referred as BTO, OPTP, BK, BRJ, PK, OPRJ in the paper while they become tokensbasic, tokensimproved, ridpairsimproved, ridpairsppjoin, recordpairsbasic, recordpairsimproved in the program. It is a bit confusing to users but it is generally easy afterward.
+
+Then, I also try to modify the similarity threshold (varies from 0.3 to 0.9) and the join attributes (tested single attribute, and up to 3 attributes). This can be easily done by modifying the configuration xml. In fact, there are much more configurable options. But many of these require implementation of new java codes. For instance, one may implement a new similarity function. In my run, I implemented a new similarity function, which always returns 0 as the similarity score. This requires me to (i) create a new class; (ii) modify the factory in the original code; (iii) re-compile the codes; (iv) update the configuration xml. After I execute the program, there are no records in the join table, as expected. Although the process is generally not very difficult, I have a small personal comment on the codes. I would prefer to use Class.forName().newInstance() instead of factory to create the object. In this way, we can get rid of step (ii).
+
+Due to time constraints, I have not tested other possible options. I think many of them are doable although it is likely that the documents at this point does not provide all the necessary steps (for example, step (ii) for using new similarity function is not mentioned in the documentation). I think it is not difficult for a usual programmer to figure out the problem, especially when they see the error message and error source in compiling the codes.
+
+R-S join (Sec. 6.2)
+===================
+
+The same main program is used for R-S join. There are not much difference as self join except that I have to load both DBLP and Citeseer datasets. A similar experiment as self join is carried out (just repeat what I have done for self join). I didn't encounter any big problems.
+
+Conclusion
+==========
+
+I am not able to perform the repeatability test on my machine and I have focused on the workability aspect. The authors have given a clear and detailed documentations for their program and their program is very flexible and is easy to use. Most of the difficulties I encountered are about Hadoop settings.

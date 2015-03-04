@@ -1,0 +1,9 @@
+# hyrax/resources> java -jar bnd-0.0.378.jar wrap -properties fuzzyjoin-1.0.0.bnd ../../fuzzyjoin/build/jar/fuzzyjoin-1.0.0.jar
+# hyrax/resources> mv fuzzyjoin-1.0.0.bar ../lib/edu.uci.ics.fuzzyjoin_1.0.0.jar
+version=1.0
+Export-Package: edu.uci.ics.fuzzyjoin.*;version=${version};-noimport:=true
+Bundle-Version: ${version}
+Bundle-Description: fuzzyjoin
+Bundle-Name: FuzzyJoin
+Bundle-SymbolicName: edu.uci.ics.fuzzyjoin
+-nouses= true
